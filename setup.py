@@ -7,4 +7,8 @@ setup(
     description='A simple data structure for Query Results of ChromaDb.',
     author='fer.rom.mu',
     author_email='fer.rom.mu.dev@gmail.com',
+    long_description=open('README.md').read(),
+    long_description_content_type='text/markdown',
+    url='https://github.com/FerRomMu/QueryResult.git',
+    license='MIT'
 )
