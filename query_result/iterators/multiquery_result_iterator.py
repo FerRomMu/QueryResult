@@ -4,18 +4,18 @@ from query_result.query_result import QueryResult
 
 class MultiQueryResultIterator(BaseQueryResultIterator):
     """
-    Iterador para manejar múltiples resultados de consulta, formateando los
-    resultados como instancias de `QueryResult`.
+    Iterator to handle multiple query results, formatting the
+    results as instances of `QueryResult`.
     """
 
     def _format_result(self, query_result):
         """
-        Formatea el resultado de la consulta como una instancia de `QueryResult`.
+        Formats the query result as an instance of `QueryResult`.
 
         Args:
-            query_result (dict): Resultado de la consulta en formato de diccionario.
+            query_result (dict): Query result in dictionary format.
 
         Returns:
-            QueryResult: Resultado formateado.
+            QueryResult: Formatted result.
         """
         return QueryResult(query_result)

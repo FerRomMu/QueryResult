@@ -1,28 +1,28 @@
 class BaseQueryResultIterator():
     """
-    ----- CLASE ABSTRACTA -----
+    ----- ABSTRACT CLASS -----
 
-    Iterador base para resultados de consultas.
+    Base iterator for query results.
 
-    Esta clase proporciona una implementación básica de iterador para iterar sobre los resultados de una consulta.
-    Subclases deben implementar el método `_format_result` para definir cómo se debe formatear cada resultado.
+    This class provides a basic iterator implementation for iterating over the results of a query.
+    Subclasses must implement the `_format_result` method to define how each result should be formatted.
 
-    Atributos:
-        __key (str): Una clave del dict dado que cumple que para los valores del dict se puede acceder a cualquier i < len(dict[key]) si no es None.
-        __index (int): El índice actual en la iteración.
-        __results (dict): Un diccionario que contiene los resultados de la consulta, con listas de valores por clave.
+    Attributes:
+        __key (str): A key from the given dict that ensures that for the values of the dict, any i < len(dict[key]) can be accessed if it is not None.
+        __index (int): The current index in the iteration.
+        __results (dict): A dictionary that contains the query results, with lists of values by key.
     """
 
     def __init__(self, results, key):
         """
-        Inicializa un iterador de resultados de consulta.
+        Initializes a query result iterator.
 
         Args:
-            results (dict): Diccionario de resultados de consulta. Debe contener listas 
-                            para cada clave, excepto la clave principal que se usa para 
-                            la iteración.
-            key (str): Clave del diccionario que tiene una lista cuyo len(lista) es equivalente al tamaño de todaas
-                            las partes iterables.
+            results (dict): Dictionary of query results. It must contain lists 
+                            for each key, except the main key used for 
+                            iteration.
+            key (str): Key of the dictionary that has a list whose len(list) is equivalent to the size of all
+                    iterable parts.
         """
         self.__key = key
         self.__index = 0
@@ -30,13 +30,13 @@ class BaseQueryResultIterator():
     
     def __next__(self):
         """
-        Retorna el siguiente resultado en la iteración.
+        Returns the next result in the iteration.
 
         Returns:
-            formatted dict: Resultado formateado de la consulta.
+            formatted dict: Formatted query result.
 
         Raises:
-            StopIteration: Cuando no hay más resultados para iterar.
+            StopIteration: When there are no more results to iterate.
         """
         if self.__index < len(self.__results[self.__key]):
             query_result = {}
@@ -51,18 +51,18 @@ class BaseQueryResultIterator():
     
     def _format_result(self, query_result):
         """
-        ----- METODO ABSTRACTO -----
+        ----- ABSTRACT METHOD -----
 
-        Formatea el resultado de la consulta. Este método debe ser sobrescrito
-        por subclases para definir el formato específico del resultado.
+        Formats the query result. This method must be overridden
+        by subclasses to define the specific format of the result.
 
         Args:
-            query_result (dict): Resultado de la consulta en formato de diccionario.
+            query_result (dict): Query result in dictionary format.
 
         Returns:
-            formatted dict: Resultado formateado.
+            formatted dict: Formatted result.
 
         Raises:
-            NotImplementedError: Debe ser implementado por subclases.
+            NotImplementedError: Must be implemented by subclasses.
         """
         raise NotImplementedError("Debe ser implementado por subclases")

@@ -3,18 +3,18 @@ from query_result.iterators.basequery_result_iterator import BaseQueryResultIter
 
 class QueryResultIterator(BaseQueryResultIterator):
     """
-    Iterador para manejar un único resultado de consulta, devolviendo los
-    resultados en el formato original sin modificaciones.
+    Iterator to handle a single query result, returning the
+    results in the original format without modifications.
     """
 
     def _format_result(self, query_result):
         """
-        Devuelve el resultado de la consulta tal como está.
+        Returns the query result as is.
 
         Args:
-            query_result (dict): Resultado de la consulta en formato de diccionario.
+            query_result (dict): Query result in dictionary format.
 
         Returns:
-            dict: Resultado de la consulta sin formatear.
+            dict: Unformatted query result.
         """
         return query_result
