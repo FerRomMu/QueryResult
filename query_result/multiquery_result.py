@@ -83,7 +83,7 @@ class MultiQueryResult(BaseQueryResult):
             self._results[key] = old_value
     
     def _setitem_by_key(self, key, query):
-        raise NotImplementedError("Aún no implementado. Usar setteo númerico.")
+        raise NotImplementedError("Not yet implemented. Use set by number.")
 
     def __setitem__(self, index, value):
         return self._either_by_type(self._setitem_by_index, self._setitem_by_key, index, value)

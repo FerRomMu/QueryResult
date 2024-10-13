@@ -1,16 +1,15 @@
 class BaseQueryResult:
     """
-    Clase base para representar el resultado de una consulta. Maneja la 
-    inicialización de los resultados, la representación y el acceso a los 
-    elementos por índice o clave.
+    Base class to represent the result of a query. It handles the 
+    initialization of results, representation, and access to elements by index or key.
 
     Attributes:
-        _results (dict): Diccionario de resultados de consulta.
-        _main_key (str): Clave principal para acceder al tamaño de los resultados no nulos.
-    
-    IMPORTANTE:
-        Esta clase asume que los resultados de la query de ChromaDB retornan el "QueryResult" de dicha libreria y que
-        tiene la siguiente estructura:
+        _results (dict): Dictionary of query results.
+        _main_key (str): Main key to access the size of non-null results.
+
+    IMPORTANT:
+        This class assumes that the results of the ChromaDB query return the "QueryResult" from that library and that
+        it has the following structure:
         ids: List[IDs]
         embeddings: Optional[
             Union[
@@ -26,9 +25,9 @@ class BaseQueryResult:
         distances: Optional[List[List[float]]]
         included: Include
 
-    NOTA:
-        Si ChromaDB cambia su estructura de retorno en el futuro, este código podría quedar 
-        deprecado y necesitará actualizaciones.
+    NOTE:
+        If ChromaDB changes its return structure in the future, this code may become 
+        deprecated and will need updates.
     """
 
     def keys(self):
@@ -41,10 +40,10 @@ class BaseQueryResult:
     # ---------------------------------------------------------------
     def __init__(self, results):
         """
-        Inicializa un resultado de consulta.
+        Initializes a query result.
 
         Args:
-            results (dict): Diccionario de resultados de consulta.
+            results (dict): Dictionary of query results.
         """
         self._results = results
         self._main_key = 'ids'
@@ -54,24 +53,24 @@ class BaseQueryResult:
     # ---------------------------------------------------------------
     def __repr__(self):
         """
-        Devuelve una representación del query result.
+        Returns a representation of the query result.
 
         Returns:
-        str: Representación en cadena de los resultados.
+            str: String representation of the results.
         """
         return f"{self.__class__.__name__}:\n{{\n{self._format_results()}\n}}"
 
     def __str__(self):
         """
-        Devuelve una representación del query result.
-        
+        Returns a representation of the query result.
+
         Returns:
-        str: Representación en cadena de los resultados.
+            str: String representation of the results.
         """
         return self.__repr__()
 
     def _format_results(self):
-        # Crea una representación en formato de cadena con saltos de línea
+        # Creates a string representation with line breaks
         formatted_results = []
         for key, value in self._results.items():
             if isinstance(value, list):
@@ -88,19 +87,19 @@ class BaseQueryResult:
     # ---------------------------------------------------------------
     def _either_by_type(self, func_num, func_str, *args):
         """
-        Selecciona una función basada en el tipo de argumento.
+        Selects a function based on the type of argument.
 
         Args:
-            func_num (function): Función a usar si el argumento es un entero.
-            func_str (function): Función a usar si el argumento es una cadena.
-            args (Array[int or str]): Una lista de argumentos para la función a ejecutar
-                                cuyo primer elemento es usado para determinar qué función usar.
+            func_num (function): Function to use if the argument is an integer.
+            func_str (function): Function to use if the argument is a string.
+            args (Array[int or str]): A list of arguments for the function to execute
+                                    whose first element is used to determine which function to use.
 
         Returns:
-            Result: El resultado de la función seleccionada.
+            Result: The result of the selected function.
 
         Raises:
-            TypeError: Si el argumento no es ni un entero ni una cadena.
+            TypeError: If the argument is neither an integer nor a string.
         """
         if not args:
             raise ValueError("At least one argument must be provided.")
@@ -114,16 +113,16 @@ class BaseQueryResult:
     
     def _getitem_by_index(self, index):
         """
-        Obtiene un resultado basado en el índice numerico.
+        Gets a result based on the numeric index.
 
         Args:
-            index (int): El índice del resultado deseado.
+            index (int): The index of the desired result.
 
         Returns:
-            dict: Un diccionario con los resultados para el índice especificado.
+            dict: A dictionary with the results for the specified index.
 
         Raises:
-            IndexError: Si el índice está fuera del rango para alguna de las claves.
+            IndexError: If the index is out of range for any of the keys.
         """
         result = {}
         for key in self._results.keys():
@@ -138,16 +137,16 @@ class BaseQueryResult:
     
     def _getitem_by_key(self, key):
         """
-        Obtiene un resultado basado en la clave.
+        Gets a result based on the key.
 
         Args:
-            key (str): La clave del resultado deseado.
+            key (str): The key of the desired result.
 
         Returns:
-            list or None: La lista de resultados para la clave especificada.
+            list or None: The list of results for the specified key.
 
         Raises:
-            KeyError: Si la clave no se encuentra en los resultados.
+            KeyError: If the key is not found in the results.
         """
         if key not in self._results:
             raise KeyError(f"Key '{key}' not found.")
@@ -155,15 +154,15 @@ class BaseQueryResult:
     
     def __getitem__(self, index):
         """
-        Obtiene un resultado basado en el índice o la clave.
+        Gets a result based on the index or the key.
 
         Args:
-            index (int or str): El índice o la clave del resultado deseado.
+            index (int or str): The index or the key of the desired result.
 
         Returns:
-            dict or list or None: El resultado basado en el índice o la clave especificada.
+            dict or list or None: The result based on the specified index or key.
 
         Raises:
-            TypeError: Si el argumento no es un entero ni una cadena.
+            TypeError: If the argument is neither an integer nor a string.
         """
         return self._either_by_type(self._getitem_by_index, self._getitem_by_key, index)

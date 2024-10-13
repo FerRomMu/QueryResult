@@ -3,27 +3,27 @@ from query_result.iterators.query_result_iterator import QueryResultIterator
 
 
 class QueryResult(BaseQueryResult):
-    """ 
-    Resultado de una consulta individual.
+    """
+    Result of an individual query.
     """
     # ---------------------------------------------------------------
     # ITERACIÓN
     # ---------------------------------------------------------------
     def __iter__(self):
         """
-        Devuelve un iterador para los resultados de la consulta.
+        Returns an iterator for the query results.
 
         Returns:
-            QueryResultIterator: Un iterador para los resultados de la consulta.
+            QueryResultIterator: An iterator for the query results.
         """
         return QueryResultIterator(self._results, self._main_key)
 
     def drop_all(self, indexes):
         """
-        Elimina los valores de los indices dados.
+        Removes the values of the given indices.
 
         Args:
-            indexes (list[int]): Una lista de indeces de resultados a borrar.
+            indexes (list[int]): A list of indices of results to delete.
         """
         for key in self._results.keys():
             old_values = self._results[key]
