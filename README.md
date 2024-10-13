@@ -1,4 +1,6 @@
 # ChromaDB Query Result Handler
+[README en español](README-ES.md)
+
 ## Description
 The ChromaDB Query Result Handler module (aka queryresults) is a lightweight and agnostic library designed to facilitate the handling of query results from the ChromaDB database. It allows intuitive access to embedding results, avoiding the complexity of managing multiple sublists and dictionaries.
 
