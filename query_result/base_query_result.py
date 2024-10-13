@@ -9,8 +9,26 @@ class BaseQueryResult:
         _main_key (str): Clave principal para acceder al tamaño de los resultados no nulos.
     
     IMPORTANTE:
-        Es requisito que len(self._results[self._main_key]) cumpla que para todo value no None
-        del dict _results se cumpla que tiene igual cantidad de elementos.
+        Esta clase asume que los resultados de la query de ChromaDB retornan el "QueryResult" de dicha libreria y que
+        tiene la siguiente estructura:
+        ids: List[IDs]
+        embeddings: Optional[
+            Union[
+                List[Embeddings],
+                List[PyEmbeddings],
+                List[NDArray[Union[np.int32, np.float32]]],
+            ]
+        ]
+        documents: Optional[List[List[Document]]]
+        uris: Optional[List[List[URI]]]
+        data: Optional[List[Loadable]]
+        metadatas: Optional[List[List[Metadata]]]
+        distances: Optional[List[List[float]]]
+        included: Include
+
+    NOTA:
+        Si ChromaDB cambia su estructura de retorno en el futuro, este código podría quedar 
+        deprecado y necesitará actualizaciones.
     """
 
     def keys(self):
@@ -21,16 +39,15 @@ class BaseQueryResult:
     # ---------------------------------------------------------------
     # INICIALIZACIÓN
     # ---------------------------------------------------------------
-    def __init__(self, results, main_key):
+    def __init__(self, results):
         """
         Inicializa un resultado de consulta.
 
         Args:
             results (dict): Diccionario de resultados de consulta.
-            main_key (str): Clave principal para acceder al tamaño de los resultados no nulos.
         """
         self._results = results
-        self._main_key = main_key
+        self._main_key = 'ids'
 
     # ---------------------------------------------------------------
     # REPRESENTACION

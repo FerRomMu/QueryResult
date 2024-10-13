@@ -48,7 +48,7 @@ class MultiQueryResult(BaseQueryResult):
             QueryResult: Resultado correspondiente al índice.
         """
         result = super()._getitem_by_index(index)
-        return QueryResult(result, self._main_key)
+        return QueryResult(result)
     
     def __getitem__(self, index):
         """

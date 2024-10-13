@@ -18,4 +18,4 @@ class MultiQueryResultIterator(BaseQueryResultIterator):
         Returns:
             QueryResult: Resultado formateado.
         """
-        return QueryResult(query_result, self._BaseQueryResultIterator__key)
+        return QueryResult(query_result)
